@@ -88,16 +88,20 @@ namespace ColorAnalyzer
             var colorCircle = sender as Shape;
             colorCircle.StrokeThickness = 2.0;
             colorCircle.Stroke = Brushes.Black;
-            //rgbTextbox.Text = $"R:{button.R}, G:{color.G} B:{color.B} A:{color.A}";
+
+            Color color = (colorCircle.Fill as SolidColorBrush).Color;
+            rgbTextbox.Text = $"{color.R}, {color.G}, {color.B}";
+            hexTextbox.Text = CalculateHex(color);
+            hslTextbox.Text = CalculateHsl(color);
         }
 
-        //private string CalculateHex(Color color)
-        //{
-        //}
+        private string CalculateHex(Color color)
+            => $"#{color.R.ToString("X2")}{color.G.ToString("X2")}{color.B.ToString("X2")}";
 
-        //private string CalculateHsl(Color color)
-        //{
-        //}
+        private string CalculateHsl(Color color)
+        {
+            return "";
+        }
 
         private void OnImageUpload(object sender, RoutedEventArgs e)
         {
@@ -119,6 +123,7 @@ namespace ColorAnalyzer
                     MessageBox.Show("Error uploading image.");
                 }
 
+                ClearAll();
                 AnalyzeColor(downloadedImage);
             }
         }
@@ -134,6 +139,25 @@ namespace ColorAnalyzer
         private void OnSelection(object sender, RoutedEventArgs e)
         {
             BitmapImage capture = new BitmapImage();
+        }
+
+        private void ClearTextBoxes()
+        {
+            rgbTextbox.Text = string.Empty;
+            hexTextbox.Text = string.Empty;
+            hslTextbox.Text = string.Empty;
+        }
+
+        private void ClearColorPalette()
+        {
+            colorList.Clear();
+            colorPalettePanel.Children.Clear();
+        }
+
+        private void ClearAll()
+        {
+            ClearTextBoxes();
+            ClearColorPalette();
         }
     }
 }
