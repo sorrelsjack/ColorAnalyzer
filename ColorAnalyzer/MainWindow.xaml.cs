@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -36,15 +37,20 @@ namespace ColorAnalyzer
             byte blue;
             byte alpha;
 
-            while (index < size && index + 3 < size)
+            for (int y = 0; y < image.PixelHeight; y++)
             {
-                blue = imageBytes[index++];
-                green = imageBytes[index++];
-                red = imageBytes[index++];
-                alpha = imageBytes[index];
+                for (int x = 0; x < image.PixelWidth; x++)
+                {
+                    index = y * stride + 4 * x;
 
-                if (alpha == 255)
-                    colorList.Add(Color.FromRgb(red, green, blue));
+                    blue = imageBytes[index++];
+                    green = imageBytes[index++];
+                    red = imageBytes[index++];
+                    alpha = imageBytes[index];
+
+                    if (alpha == 255)
+                        colorList.Add(Color.FromRgb(red, green, blue));
+                }
             }
 
             colorList = colorList.Distinct().ToList();
@@ -63,12 +69,35 @@ namespace ColorAnalyzer
             {
                 SolidColorBrush brush = new SolidColorBrush();
                 brush.Color = color;
-                Shape currentShape = new Ellipse() { Height = 20, Width = 20 };
+                Shape currentShape = new Ellipse() { Height = 30, Width = 30 };
+                currentShape.MouseDown += (s, e) => { OnPaletteCircleClicked(s, e); };
 
                 currentShape.Fill = brush;
+                currentShape.Margin = new Thickness(0.0, 0.0, 5.0, 0.0);
                 colorPalettePanel.Children.Add(currentShape);
             }
         }
+
+        private void OnPaletteCircleClicked(object sender, MouseEventArgs e)
+        {
+            foreach (Shape shape in colorPalettePanel.Children)
+            {
+                shape.Stroke = null;
+            }
+
+            var colorCircle = sender as Shape;
+            colorCircle.StrokeThickness = 2.0;
+            colorCircle.Stroke = Brushes.Black;
+            //rgbTextbox.Text = $"R:{button.R}, G:{color.G} B:{color.B} A:{color.A}";
+        }
+
+        //private string CalculateHex(Color color)
+        //{
+        //}
+
+        //private string CalculateHsl(Color color)
+        //{
+        //}
 
         private void OnImageUpload(object sender, RoutedEventArgs e)
         {

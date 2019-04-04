@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorAnalyzer"
         mc:Ignorable="d"
-        Title="Color Analyzer" Height="350" Width="450">
+        Title="Color Analyzer" Height="350" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <StackPanel x:Name="colorPalettePanel" Orientation="Horizontal" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
         <Button Click="OnImageUpload" Background="Black" Width="50" Height="30"></Button>
 
-        <StackPanel x:Name="colorValuesPanel">
+        <StackPanel x:Name="colorValuesPanel" Grid.Column="0">
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <Label Content="Hex: " />
                 <TextBox x:Name="hexTextbox" Width="150" Background="White" BorderBrush="Black" />
@@ -24,5 +28,7 @@
                 <TextBox x:Name="hslTextbox" Width="150" Background="White" BorderBrush="Black" />
             </StackPanel>
         </StackPanel>
+
+        <StackPanel x:Name="colorPalettePanel" Orientation="Horizontal" Grid.Column="1" />
     </Grid>
 </Window>
