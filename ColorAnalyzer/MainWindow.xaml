@@ -29,6 +29,8 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel x:Name="colorPalettePanel" Orientation="Horizontal" Grid.Column="1" />
+        <ScrollViewer Grid.Column="1">
+            <WrapPanel x:Name="colorPalettePanel" Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -73,7 +73,7 @@ namespace ColorAnalyzer
                 currentShape.MouseDown += (s, e) => { OnPaletteCircleClicked(s, e); };
 
                 currentShape.Fill = brush;
-                currentShape.Margin = new Thickness(0.0, 0.0, 5.0, 0.0);
+                currentShape.Margin = new Thickness(0.0, 0.0, 5.0, 5.0);
                 colorPalettePanel.Children.Add(currentShape);
             }
         }
@@ -120,6 +120,7 @@ namespace ColorAnalyzer
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine(ex);
                     MessageBox.Show("Error uploading image.");
                 }
 
