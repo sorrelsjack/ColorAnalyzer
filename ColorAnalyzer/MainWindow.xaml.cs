@@ -26,6 +26,9 @@ namespace ColorAnalyzer
 
         private void AnalyzeColor(BitmapImage image)
         {
+            spinnerPanel.Visibility = Visibility.Visible;
+            spinner.IsActive = true;
+
             int index = 0;
             int stride = image.PixelWidth * 4;
             int size = image.PixelHeight * stride;
@@ -61,6 +64,9 @@ namespace ColorAnalyzer
             }
 
             PopulatePalette();
+
+            spinnerPanel.Visibility = Visibility.Hidden;
+            spinner.IsActive = false;
         }
 
         private void PopulatePalette()
